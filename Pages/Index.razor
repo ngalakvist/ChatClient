@@ -14,17 +14,17 @@
       <button type="button" @onclick="GetReplyFromBot">  <span class="oi oi-chat" aria-hidden="true"></span> Chat!</button>
     </div>
   </form>
-</div>
-<ul class="list-group">
-  @foreach (var chat in chatFlow)
-  {
-    <li class="list-group-item list-group-item-light">
-      <p style="color:red">@chat.Question ?</p>
-      <p style="color:blue">  @chat.Answer.Trim('"')</p>
-    </li>
-  }
-</ul>
 
+  <ul class="list-group">
+    @foreach (var chat in chatFlow)
+    {
+      <li class="list-group-item list-group-item-light">
+        <p style="color:red">@chat.Question ?</p>
+        <p style="color:blue">  @chat.Answer.Trim('"')</p>
+      </li>
+    }
+  </ul>
+</div>
 @code {
 
     ChatFlow chat;
