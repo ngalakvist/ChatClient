@@ -29,9 +29,9 @@
 
 @code {
 
-  ChatFlow chat;
-  string answer;
-  string question;
+    ChatFlow chat;
+    string answer;
+    string question;
   private IList<ChatFlow> chatFlow = new List<ChatFlow>();
 
   protected override void OnInitialized()
@@ -43,10 +43,13 @@
   {
     try
     {
-      var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
-      var client = new HttpClient();
-      answer = await client.GetStringAsync(uri);
-      AddChatFlow();
+      if (!string.IsNullOrWhiteSpace(question))
+      {
+        var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
+        var client = new HttpClient();
+        answer = await client.GetStringAsync(uri);
+        AddChatFlow();
+      }
     }
     catch (Exception)
     {
