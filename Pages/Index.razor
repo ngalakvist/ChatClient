@@ -18,11 +18,9 @@
 <ul class="list-group">
   @foreach (var chat in chatFlow)
   {
-    <li class="list-group-item list-group-item-info">
-      <hr />
-      <p>Question :@chat.Question</p>
-      <p>Answer :<span>@chat.Answer</span> </p>
-      <hr />
+    <li class="list-group-item list-group-item-light">
+      <p style="color:red">@chat.Question ?</p>
+      <p style="color:blue">  @chat.Answer.Trim('"')</p>
     </li>
   }
 </ul>
