@@ -1,6 +1,5 @@
 ﻿@page "/chatroom"
   <hr />
-
   <h3>
     Fråga något om MDH Studentkonto:
   </h3>
@@ -25,7 +24,6 @@
             <p>Answer :<span>@chat.Answer</span> </p>
             <hr />
           </li>
-
         }
       </ul>
 
@@ -43,7 +41,7 @@
         }
         private async Task GetReplyFromBot()
         {
-          var uri = "http://127.0.0.1:5000/chatbot/" + question;
+          var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
           var client = new HttpClient();
           answer = await client.GetStringAsync(uri);
           AddChatFlow();
