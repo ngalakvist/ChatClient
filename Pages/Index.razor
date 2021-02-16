@@ -1,11 +1,12 @@
 ﻿@page "/"
 <hr />
-<h3>
-  Fråga något om MDH Studentkonto:
-</h3>
-<p></p>
-<p></p>
+
 <div class="container">
+  <h4>
+    Fråga något om MDH Studentkonto:
+  </h4>
+  <p></p>
+  <p></p>
   <form>
     <div class="form-group">
       <label for="inputdefault">Skrev din fråga</label>
@@ -27,9 +28,9 @@
 </div>
 @code {
 
-    ChatFlow chat;
-    string answer;
-    string question;
+  ChatFlow chat;
+  string answer;
+  string question;
   private IList<ChatFlow> chatFlow = new List<ChatFlow>();
 
   protected override void OnInitialized()
