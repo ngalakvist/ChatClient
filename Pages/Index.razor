@@ -41,10 +41,19 @@
   }
   private async Task GetReplyFromBot()
   {
-    var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
-    var client = new HttpClient();
-    answer = await client.GetStringAsync(uri);
-    AddChatFlow();
+    try
+    {
+      var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
+      var client = new HttpClient();
+      answer = await client.GetStringAsync(uri);
+      AddChatFlow();
+    }
+    catch (Exception)
+    {
+      var ans = "Kontakta studenttorget eller Gå till https://www.mdh.se/student";
+      chatFlow.Add(new ChatFlow { Question = question, Answer = ans });
+    }
+
   }
 
   private void AddChatFlow()
