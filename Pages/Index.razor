@@ -53,7 +53,7 @@
     catch (Exception)
     {
       var ans = "Kontakta studenttorget eller Gå till https://www.mdh.se/student";
-      chatFlow.Add(new ChatFlow { Question = question, Answer = ans });
+      chatFlow.Insert(0,new ChatFlow { Question = question, Answer = ans });
     }
 
   }
@@ -62,7 +62,7 @@
   {
     if (!string.IsNullOrWhiteSpace(question))
     {
-      chatFlow.Add(new ChatFlow { Question = question, Answer = answer });
+      chatFlow.Insert(0,new ChatFlow { Question = question, Answer = answer });
       question = string.Empty;
     }
   }
