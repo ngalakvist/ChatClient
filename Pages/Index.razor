@@ -1,29 +1,31 @@
 ﻿@page "/"
 <hr />
 <div class="container">
-  <h4>
-    Fråga något om MDH Studentkonto:
-  </h4>
+  <h2>
+    Chatta med Mdh-Studentkonto AI-Bot
+  </h2>
+  <p></p>
   <p></p>
   <p></p>
   <form>
     <div class="form-group">
-      <label for="inputdefault">Skriv din fråga !</label>
-      <input class="form-control" id="inputdefault" type="text" @bind="question">
-      <p></p>
-      <button type="button" @onclick="GetReplyFromBot">  <span class="oi oi-chat" aria-hidden="true"></span> Chat!</button>
-    </div>
-  </form>
+      <div id="scrollbox">
 
-  <ul class="list-group">
-    @foreach (var chat in chatFlow)
-    {
-      <li class="list-group-item list-group-item-light">
-        <p style="color:red">Du: @chat.Question ?</p>
-        <p style="color:blue">Miss-Bot: @chat.Answer.Trim('"')</p>
-      </li>
-    }
-  </ul>
+        @foreach (var chat in chatFlow)
+        {
+          <div class="@chat.CSS">
+            <div class="user">Du: @chat.Question ?</div>
+            <div class="msg">Miss-Bot: @chat.Answer.Trim('"')</div>
+          </div>
+        }
+        <hr />
+        <input class="form-control" id="inputdefault" type="text" @bind="question">
+        <p></p>
+        <button type="button"  @onkeydown="@Enter" @onclick="GetReplyFromBot">  <span class="oi oi-chat" aria-hidden="true"></span> Chat!</button>
+      </div>
+      </div>
+</form>
+
 </div>
 @code {
 
@@ -36,6 +38,7 @@
   {
     base.OnInitialized();
     chat = new ChatFlow();
+    chat.Mine = true;
   }
   private async Task GetReplyFromBot()
   {
@@ -45,6 +48,7 @@
       {
         var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
         var client = new HttpClient();
+
         answer = await client.GetStringAsync(uri);
         AddChatFlow();
       }
@@ -52,7 +56,7 @@
     catch (Exception)
     {
       var ans = "Kontakta studenttorget eller Gå till https://www.mdh.se/student";
-      chatFlow.Insert(0,new ChatFlow { Question = question, Answer = ans });
+      chatFlow.Add(new ChatFlow { Question = question, Answer = ans });
     }
 
   }
@@ -61,13 +65,50 @@
   {
     if (!string.IsNullOrWhiteSpace(question))
     {
-      chatFlow.Insert(0,new ChatFlow { Question = question, Answer = answer });
+      chatFlow.Add(new ChatFlow { Question = question, Answer = answer });
       question = string.Empty;
     }
   }
+
+  public async Task Enter(KeyboardEventArgs e)
+  {
+    if (e.Code == "Enter" || e.Code == "NumpadEnter")
+    {
+      try
+      {
+        if (!string.IsNullOrWhiteSpace(question))
+        {
+          var uri = "https://my-chat-bot.azurewebsites.net/chatbot/" + question;
+          var client = new HttpClient();
+
+          answer = await client.GetStringAsync(uri);
+          AddChatFlow();
+        }
+      }
+      catch (Exception)
+      {
+        var ans = "Kontakta studenttorget eller Gå till https://www.mdh.se/student";
+        chatFlow.Add(new ChatFlow { Question = question, Answer = ans });
+      }
+    }
+  }
+
   public class ChatFlow
   {
     public string Question { get; set; }
     public string Answer { get; set; }
+    public bool Mine { get; set; }
+
+    /// <summary>
+    /// Determine CSS classes to use for message div
+    /// </summary>
+    public string CSS
+    {
+      get
+      {
+        return Mine ? "sent" : "received";
+      }
+    }
+
   }
 }
