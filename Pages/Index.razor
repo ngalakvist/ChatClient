@@ -1,4 +1,5 @@
 ﻿@page "/"
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <hr />
 <div class="container">
   <h2>
@@ -17,6 +18,7 @@
             <div class="user">Du: @chat.Question ?</div>
             <div class="msg">Miss-Bot: @chat.Answer.Trim('"')</div>
           </div>
+          <p></p>
         }
         <hr />
         <input class="form-control" id="inputdefault" type="text" @bind="question">
